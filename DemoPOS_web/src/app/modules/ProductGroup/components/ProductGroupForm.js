@@ -71,7 +71,7 @@ const ProductGroupForm = (props) => {
 
       dispatch(productGroupRedux.actions.saving());
 
-      if (productGroupId == null || productGroupId == false) {
+      if (productGroupId === null || productGroupId === false) {
         // Create
         addProductgroup.mutate(payload);
       } else {

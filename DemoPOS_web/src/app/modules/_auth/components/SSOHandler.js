@@ -81,7 +81,8 @@ function SSOHandler(props) {
             roles: authCRUD.getRoles(user.id_token),
             permissions: authCRUD.getPermissions(user.id_token),
             userManager: userManager,
-            client_version: authCRUD.getClientVersion(user.access_token)
+            client_version: authCRUD.getClientVersion(user.access_token),
+            userProperties: authCRUD.getUserProperties(user.id_token)
           };
           dispatch(authRedux.actions.login(payload));
         } else {

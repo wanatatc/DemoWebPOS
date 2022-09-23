@@ -9,6 +9,7 @@ function FormikDateTimePicker(props) {
     <MuiPickersUtilsProvider utils={DayJsUtils} locale="th">
       <KeyboardDateTimePicker
         fullWidth
+        inputVariant={props.variant}
         name={props.name}
         variant="inline"
         ampm={false}
@@ -48,6 +49,7 @@ FormikDateTimePicker.propTypes = {
   autoOk: PropTypes.bool,
   minDate : PropTypes.object,
   maxDate : PropTypes.object,
+  variant: PropTypes.string
 };
 
 // Same approach for defaultProps too
@@ -60,7 +62,8 @@ FormikDateTimePicker.defaultProps = {
   disablePast: false,
   autoOk: true,
   minDate: {},
-  maxDate: {}
+  maxDate: {},
+  variant: 'outlined'
 };
 
 export default FormikDateTimePicker;

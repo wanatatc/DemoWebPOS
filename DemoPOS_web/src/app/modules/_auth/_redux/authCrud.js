@@ -5,6 +5,22 @@ export function getUserByToken(token) {
   return decoded;
 }
 
+export function getUserProperties(token) {
+
+  let decodedToken = jwt_decode(token);
+
+  let userProperties = {
+    userId: decodedToken.user_id,
+    employeeCode: decodedToken.employee_code,
+    employeeFirstName: decodedToken.employee_firstname,
+    employeeLastName: decodedToken.employee_lastname,
+    employeeBranchId: decodedToken.employee_branchid,
+    employeeBranchName: decodedToken.employee_branchname,
+  };
+
+  return userProperties;
+}
+
 export function getClientVersion(token) {
   // debugger
   let decoded = jwt_decode(token)["client_version"];

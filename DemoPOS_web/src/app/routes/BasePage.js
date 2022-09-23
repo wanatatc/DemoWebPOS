@@ -11,6 +11,9 @@ import EmployeeManage from "../modules/Employee/pages/EmployeeManage";
 import AlertDemo from "../modules/_demo/pages/AlertDemo";
 import FormDemo from "../modules/_demo/pages/formComponents/FormDemo";
 import FormWithAutoComplete from "../modules/_demo/pages/formComponents/FormWithAutoComplete";
+import FormWithButton from "../modules/_demo/pages/formComponents/FormWithButton";
+import FormWithIconButton from "../modules/_demo/pages/formComponents/FormWithIconButton";
+import FormWithChip from "../modules/_demo/pages/formComponents/FormWithChip";
 import FormWithCheckBox from "../modules/_demo/pages/formComponents/FormWithCheckBox";
 import FormWithCheckboxGroup from "../modules/_demo/pages/formComponents/FormWithCheckboxGroup";
 import FormWithDatePicker from "../modules/_demo/pages/formComponents/FormWithDatePicker";
@@ -87,6 +90,24 @@ export default function BasePage(props) {
           title="form demo"
           path="/demo/formDemo"
           component={FormDemo}
+        />
+        <PrivateRoute
+          exact
+          title="form demo"
+          path="/demo/formWithButton"
+          component={FormWithButton}
+        />
+        <PrivateRoute
+          exact
+          title="form demo"
+          path="/demo/formWithIconButton"
+          component={FormWithIconButton}
+        />
+        <PrivateRoute
+          exact
+          title="form demo"
+          path="/demo/formWithChip"
+          component={FormWithChip}
         />
         <PrivateRoute
           exact
@@ -298,6 +319,7 @@ export default function BasePage(props) {
         <PrivateRoute
           exact
           path="/product"
+          title="Product"
           permissions={[]}
           component={Product}
         />
@@ -330,21 +352,23 @@ export default function BasePage(props) {
           component={CheckoutPage}
         />
 
-        <PrivateRoute exact path="/productgroup" component={ProductGroups} />
+        <PrivateRoute exact path="/productgroup" component={ProductGroups} title="Product Group" />
 
         <PrivateRoute
           exact
           path="/productgroup/:id/edit"
           component={ProductGroupEdit}
+          title="Product Group Edit"
         />
 
         <PrivateRoute
           exact
           path="/productgroup/:id"
           component={ProductGroupById}
+          title="Product Group Detail"
         />
 
-        <PrivateRoute exact path="/purchase" component={Purchase} />
+        <PrivateRoute exact title="Purchase" path="/purchase" component={Purchase} />
 
         {/* nothing match - redirect to error */}
         <Redirect to="/error404" />

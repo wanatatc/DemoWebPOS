@@ -1,21 +1,63 @@
 import React from "react";
-import {
-  Typography,
-  IconButton,
-  MenuItem,
-  Menu,
-  Divider,
-} from "@material-ui/core";
-import Chip from "@material-ui/core/Chip";
-import Link from "@material-ui/core/Link";
-import UserProfile from "./UserProfile";
 import { useSelector } from "react-redux";
-import * as CONST from '../../../Constant';
+import {
+  Avatar,
+  Badge,
+  Button,
+  Divider,
+  Menu,
+  MenuItem,
+  Typography,
+  makeStyles,
+  ListItemIcon,
+  Icon,
+  ListItemText,
+} from "@material-ui/core";
+import NotificationsIcon from "@material-ui/icons/Notifications";
+import UserProfile from "./UserProfile";
+import * as CONST from "../../../Constant";
+
+const useStyles = makeStyles((theme) => ({
+  avatar: {
+    width: 32,
+    height: 32,
+    backgroundColor: theme.palette.secondary.main,
+    fontSize: "18px",
+  },
+  caption: {
+    color: theme.palette.text.secondary,
+  },
+}));
 
 function UserMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const authReducer = useSelector(({ auth }) => auth);
+  const layoutReducer = useSelector(({ layout }) => layout);
+  const classes = useStyles();
+
+  const userProperties = authReducer.userProperties;
+  let userName = "";
+  let userTextAvatar = "";
+
+  if (
+    userProperties.employeeCode !== "" &&
+    userProperties.employeeFirstName !== "" &&
+    userProperties.employeeLastName !== ""
+  ) {
+    userName =
+      userProperties.employeeCode +
+      " " +
+      userProperties.employeeFirstName +
+      " " +
+      userProperties.employeeLastName;
+    userTextAvatar =
+      userProperties.employeeFirstName.charAt(0) +
+      userProperties.employeeLastName.charAt(0);
+  } else {
+    userName = authReducer.user.userName;
+    userTextAvatar = authReducer.user.userName.charAt(0);
+  }
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -34,71 +76,75 @@ function UserMenu() {
   };
 
   return (
-    <div>
-      <React.Fragment>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="menu-appbar"
-          aria-haspopup="true"
-          onClick={handleMenu}
-          color="inherit"
-        >
-          <Typography variant="caption">{authReducer.user}</Typography>
-        </IconButton>
-        <Menu
-          id="menu-appbar"
-          anchorEl={anchorEl}
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "right",
+    <React.Fragment>
+      <Button color="secondary">
+        {/* Badge notification */}
+        <Badge badgeContent={0} color="error">
+          <NotificationsIcon />
+        </Badge>
+      </Button>
+      <Button
+        aria-label="account of current user"
+        aria-controls="menu-appbar"
+        aria-haspopup="true"
+        onClick={handleMenu}
+        color="inherit"
+      >
+        <Avatar
+          className={classes.avatar}
+          style={{
+            marginRight:
+              layoutReducer.responsiveKey === "lg" ||
+              layoutReducer.responsiveKey === "xl"
+                ? 10
+                : 0,
           }}
-          keepMounted
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-          open={open}
-          onClose={handleClose}
         >
-          {/* start  User Profile*/}
-          <MenuItem>
-            <div onClick={handleProfile.bind(this)}>
-              <UserProfile></UserProfile>
-            </div>
-          </MenuItem>
-          {/* end User Profile */}
+          {userTextAvatar}
+        </Avatar>
+        {(layoutReducer.responsiveKey === "lg" ||
+          layoutReducer.responsiveKey === "xl") && (
+          <Typography variant="caption" className={classes.caption}>
+            {userName}
+          </Typography>
+        )}
+      </Button>
+      <Menu
+        id="menu-appbar"
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        keepMounted
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        open={open}
+        onClose={handleClose}
+      >
+        {/* start  User Profile*/}
+        <MenuItem>
+          <div onClick={handleProfile.bind(this)}>
+            <UserProfile />
+          </div>
+        </MenuItem>
+        {/* end User Profile */}
 
-          <Divider light />
+        <Divider light />
 
-          {/* start Sign out*/}
-          <MenuItem onClick={logoutClick}>
-            <Chip
-              size="small"
-              style={{ marginTop: 10 }}
-              // icon={
-              //   <Icon style={{ fontSize: 20, marginLeft: 11 }}>logout</Icon>
-              // }
-              color="default"
-            />
-            <Link
-              style={{ color: "#000000", marginLeft: 20, marginTop: 10 }}
-              component="button"
-              variant="inherit"
-              onClick={() => {
-                logoutClick();
-              }}
-            >
-              ออกจากระบบ
-            </Link>
-          </MenuItem>
-          {/* end Sign out */}
-        </Menu>
-      </React.Fragment>
-    </div>
+        {/* start Sign out*/}
+        <MenuItem onClick={logoutClick}>
+          <ListItemIcon>
+            <Icon>logout</Icon>
+          </ListItemIcon>
+          <ListItemText>ออกจากระบบ</ListItemText>
+        </MenuItem>
+        {/* end Sign out */}
+      </Menu>
+    </React.Fragment>
   );
 }
 
 export default UserMenu;
-
-
-

@@ -1,54 +1,24 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { useFormik } from "formik";
 import { Grid, Button, Paper } from "@material-ui/core/";
 import { Icon } from "@material-ui/core";
-import { useSelector,useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import {FormikTextField,FormikDropdown} from "../../_common/components/CustomFormik";
-import * as productRedux from '../productRedux'
-
-function ProductToolbar() {
-  const dispatch = useDispatch();
+import {
+  FormikTextField,
+  FormikDropdown,
+} from "../../_common/components/CustomFormik";
+import ThemeButton from "../../_common/components/Themes/ThemeButton";
+function ProductAdvanceSearch(props) {
   const history = useHistory();
-  const productReducer = useSelector(({product})=>product);
   const [filterList] = useState([
     { name: "Product", value: "ProductName" },
     { name: "Group", value: "ProductGroupName" },
   ]);
-
-  React.useEffect(() => {
-   
-    return () => {
-      dispatch(productRedux.actions.reset())
-    }
-  }, [])
-  
-  const formik = useFormik({
-    enableReinitialize: true,
-    validate: (values) => {
-      const errors = {};
-
-      return errors;
-    },
-    initialValues: {
-      filterColumn: productReducer.searchValues.filterColumn,
-      searchText: productReducer.searchValues.value,
-    },
-    onSubmit: (values) => {
-      //submit ....
-      let valuesToDispatch = {
-        filterColumn: values.filterColumn,
-        value: values.searchText
-      };
-      dispatch(productRedux.actions.updateSearch(valuesToDispatch))
-      formik.setSubmitting(false);
-    },
-  });
-
   return (
     <Paper elevation={3} style={{ marginBottom: 5, padding: 10 }}>
-      <form onSubmit={formik.handleSubmit}>
+      <form onSubmit={props.formik.handleSubmit}>
         <Grid
           container
           spacing={3}
@@ -58,7 +28,7 @@ function ProductToolbar() {
           {/* product groups */}
           <Grid item xs={12} lg={3}>
             <FormikDropdown
-              formik={formik}
+              formik={props.formik}
               disableFirstItem={true}
               name="filterColumn"
               label="ค้นหาจาก"
@@ -71,16 +41,21 @@ function ProductToolbar() {
 
           {/* Search */}
           <Grid item xs={12} lg={3}>
-            <FormikTextField formik={formik} name="searchText" label="Search" />
+            <FormikTextField
+              formik={props.formik}
+              name="searchText"
+              label="คำค้น"
+              placeholder="คำค้น"
+            />
           </Grid>
 
           <Grid container item xs={12} lg={2}>
             <Button
               type="submit"
-              disabled={formik.isSubmitting}
+              disabled={props.formik.isSubmitting}
               fullWidth
               size="small"
-              color="default"
+              color="primary"
               variant="contained"
             >
               <Icon>search</Icon>
@@ -88,18 +63,30 @@ function ProductToolbar() {
             </Button>
           </Grid>
 
-          <Grid container item xs={12} lg={1}>
-            <Button
+          <Grid container item xs={12} lg={2}>
+            <ThemeButton
+              color="primary"
+              fullWidth
+              onClick={() => {
+                props.onShowHideAdvance();
+              }}
+            >
+              ปิดค้นหาขั้นสูง
+            </ThemeButton>
+          </Grid>
+
+          <Grid container item xs={12} lg={2}>
+            <ThemeButton
               fullWidth
               //   onClick={handleClickAdd}
-              color="primary"
+              color="submit"
               variant="contained"
-              onClick={()=> {
-                history.push('/product/new')
+              onClick={() => {
+                history.push("/product/new");
               }}
             >
               Add +
-            </Button>
+            </ThemeButton>
           </Grid>
         </Grid>
       </form>
@@ -107,4 +94,15 @@ function ProductToolbar() {
   );
 }
 
-export default ProductToolbar;
+ProductAdvanceSearch.propTypes = {
+  formik: PropTypes.object,
+  onShowHideAdvance: PropTypes.func,
+};
+
+// Same approach for defaultProps too
+ProductAdvanceSearch.defaultProps = {
+  formik: {},
+  onShowHideAdvance: () => {},
+};
+
+export default ProductAdvanceSearch;

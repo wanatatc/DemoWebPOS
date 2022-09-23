@@ -21,6 +21,7 @@ import {
 import { AddCircle, FormatLineSpacing, Search } from "@material-ui/icons";
 
 import * as swal from "../../_common/components/SweetAlert";
+import NavigationMap from "../../../layout/components/NavigationMap";
 import {
   StandardDataTable,
   ColumnIsActive,
@@ -208,7 +209,7 @@ const ProductGroups = () => {
   ];
 
   return (
-    <Container>
+    <>
       <Grid container className={classes.root} spacing={2}>
         <Grid container item xs={12} justifyContent="space-between">
           <Grid container item spacing={2} xs={8}>
@@ -323,7 +324,7 @@ const ProductGroups = () => {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
-    </Container>
+    </>
   );
 };
 

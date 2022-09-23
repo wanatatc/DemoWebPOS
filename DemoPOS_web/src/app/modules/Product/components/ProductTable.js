@@ -1,7 +1,7 @@
 import React from "react";
 import { Paper, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import {  useSelector } from "react-redux";
+import {  useSelector,useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
   StandardDataTable,
@@ -12,6 +12,8 @@ import {
 import { EditButton, DeleteButton, ViewButton } from "../../_common/components/Buttons";
 import * as swal from "../../_common/components/SweetAlert";
 import * as productApi from "../productApi";
+import * as productRedux from '../productRedux'
+
 
 require("dayjs/locale/th");
 var dayjs = require("dayjs");
@@ -28,18 +30,17 @@ const useStyles = makeStyles((theme) => ({
 function ProductTable() {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
   const productReducer = useSelector(({ product }) => product);
-  const [paginated, setPaginated] = React.useState({
-    page: 1,
-    recordsPerPage: 10,
-    orderingField: "",
-    ascendingOrder: true,
-  });
 
   const productData = productApi.useGetPaginated(
-    paginated,
+    productReducer.paginated,
     productReducer.searchValues
   );
+
+  const updatePaginated = (paginated) => {
+    dispatch(productRedux.actions.updatePaginated(paginated))
+  }
 
   const productDelete = productApi.useDeleteById(null);
 
@@ -183,8 +184,8 @@ function ProductTable() {
             loading={productData.isLoading}
             columns={columns}
             data={productData.data?.data}
-            paginated={paginated}
-            setPaginated={setPaginated}
+            paginated={productReducer.paginated}
+            setPaginated={updatePaginated}
             totalRecords={productData.data?.totalAmountRecords}
           ></StandardDataTable>
         </Grid>

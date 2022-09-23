@@ -8,6 +8,7 @@ function FormikDatePicker(props) {
   return (
     <MuiPickersUtilsProvider utils={DayJsUtils} locale="th">
       <KeyboardDatePicker
+        inputVariant={props.variant}
         fullWidth
         clearable={props.clearable}
         name={props.name}
@@ -49,6 +50,7 @@ FormikDatePicker.propTypes = {
   clearable: PropTypes.bool,
   minDate : PropTypes.object,
   maxDate : PropTypes.object,
+  variant: PropTypes.string
 };
 
 // Same approach for defaultProps too
@@ -62,7 +64,8 @@ FormikDatePicker.defaultProps = {
   autoOk: true,
   clearable: false,
   minDate: {},
-  maxDate: {}
+  maxDate: {},
+  variant: 'outlined'
 };
 
 export default FormikDatePicker;

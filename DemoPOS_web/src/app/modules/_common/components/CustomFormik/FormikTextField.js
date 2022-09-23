@@ -64,7 +64,7 @@ FormikTextField.defaultProps = {
   password: false,
   autoFocus: false,
   placeholder: '',
-  variant:'standard',
+  variant:'outlined',
   size:''
 };
 

@@ -11,9 +11,13 @@ const initialAuthState = {
   permissions: [],
   userManager: {},
   client_version: '',
-  selectedEmployee: {
-    id:'00205',
-    name:'Thanapoom'
+  userProperties:{
+    userId: 0,
+    employeeCode: "",
+    employeeFirstName: "",
+    employeeLastName: "",
+    employeeBranchId: 0,
+    employeeBranchName: "",
   }
 };
 
@@ -27,7 +31,8 @@ export const reducer = (state = initialAuthState, action) => {
         roles: [...action.payload.roles],
         permissions: [...action.payload.permissions],
         userManager: action.payload.userManager,
-        client_version: action.payload.client_version
+        client_version: action.payload.client_version,
+        userProperties: action.payload.userProperties
       };
     }
 
@@ -39,7 +44,15 @@ export const reducer = (state = initialAuthState, action) => {
         roles: [],
         permissions: [],
         userManager: {},
-        client_version: ''
+        client_version: '',
+        userProperties:{
+          userId: 0,
+          employeeCode: "",
+          employeeFirstName: "",
+          employeeLastName: "",
+          employeeBranchId: 0,
+          employeeBranchName: "",
+        }
       };
     }
 

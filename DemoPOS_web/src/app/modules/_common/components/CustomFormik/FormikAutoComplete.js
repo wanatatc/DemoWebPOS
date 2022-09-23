@@ -100,6 +100,7 @@ function FormikAutoComplete(props) {
             props.formik.setFieldTouched([`${props.name}`], true, true);
           }}
           label={props.label}
+          variant={props.variant}
           value={props.formik.values[`${props.name}`]}
           InputProps={{
             ...params.InputProps,
@@ -128,6 +129,7 @@ FormikAutoComplete.propTypes = {
   disabled: PropTypes.bool,
   defaultValue: PropTypes.object,
   minSearchLen: PropTypes.number,
+  variant:PropTypes.string
 };
 
 FormikAutoComplete.defaultProps = {
@@ -140,6 +142,7 @@ FormikAutoComplete.defaultProps = {
   disabled: false,
   defaultValue: { id: "", name: "Do not forget to set defaultValue" },
   minSearchLen: 1,
+  variant:"outlined"
 };
 
 export default FormikAutoComplete;

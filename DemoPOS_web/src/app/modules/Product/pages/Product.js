@@ -1,11 +1,11 @@
 import React from 'react'
+import ProductSearch from '../components/ProductSearch'
 import ProductTable from '../components/ProductTable'
-import ProductToolbar from '../components/ProductToolbar'
 
 function Product() {
   return (
     <div>
-        <ProductToolbar></ProductToolbar> 
+        <ProductSearch></ProductSearch> 
         <ProductTable></ProductTable>
     </div>
   )

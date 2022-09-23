@@ -7,7 +7,7 @@ import {
   MenuItem,
   FormHelperText,
 } from "@material-ui/core/";
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import InputBase from '@material-ui/core/InputBase';
 
 const BootstrapInput = withStyles((theme) => ({
@@ -43,15 +43,19 @@ function FormikDropdown(props) {
   return (
     <FormControl
       fullWidth
+      variant={props.variant}
       disabled={props.disabled}
       error={
         props.formik.errors[`${props.name}`] &&
         props.formik.touched[`${props.name}`]
       }
     >
-      <InputLabel>{props.label}</InputLabel>
+      <InputLabel id={`${props.name}-select-label`}>{props.label}</InputLabel>
       <Select
         name={props.name}
+        labelId={`${props.name}-select-label`}
+        label={props.label}
+        id={`${props.name}-select`}
         value={props.formik.values[`${props.name}`]}
         onBlur={props.formik.handleBlur}
         onChange={(event) => {
@@ -106,6 +110,7 @@ FormikDropdown.propTypes = {
   disabled: PropTypes.bool,
   input: PropTypes.bool,
   disabledItemId: PropTypes.array,
+  variant: PropTypes.string
 };
 
 // Same approach for defaultProps too
@@ -121,7 +126,9 @@ FormikDropdown.defaultProps = {
   selectedCallback: () => { },
   disabled: false,
   input: false,
-  disabledItemId: []
+  disabledItemId: [],
+  variant: 'outlined'
 };
 
 export default FormikDropdown;
+

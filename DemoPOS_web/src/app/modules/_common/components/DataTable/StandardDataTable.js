@@ -7,6 +7,7 @@ import { createTheme, MuiThemeProvider } from "@material-ui/core/styles";
 function StandardDataTable(props) {
   const options = {
     filterType: "checkbox",
+    jumpToPage:true,
     print: props.print,
     download: props.download,
     filter: props.filter,
@@ -55,11 +56,13 @@ function StandardDataTable(props) {
         previous: "ย้อนกลับ",
         rowsPerPage: "ข้อมูลต่อหน้า",
         displayRows: "จาก",
+        jumpToPage: 'หน้า'
       },
       viewColumns: {
         title: "แสดง Columns",
         titleAria: "Show/Hide Table Columns",
       },
+      topBar: { title: false }
     },
     setTableProps: () => {
       return {
@@ -74,7 +77,7 @@ function StandardDataTable(props) {
       overrides: {
         MuiTableCell: {
           head: {
-            backgroundColor: props.headerbgcolor,
+            backgroundColor: `${props.headerbgcolor} !important` ,
             fontFamily: props.fontFamily,
           },
           root: {
@@ -120,7 +123,7 @@ function StandardDataTable(props) {
       <MuiThemeProvider theme={getMuiTheme()}>
         <MUIDataTable
           denseTable={props.denseTable}
-          title={
+          title={props.showTitle &&
             <React.Fragment>
               <Typography variant="h6" align="left">
                 {props.title}
@@ -159,12 +162,14 @@ StandardDataTable.propTypes = {
   filter: PropTypes.bool,
   search: PropTypes.bool,
   viewColumns: PropTypes.bool,
+  headerbgcolor: PropTypes.string,
+  showTitle: PropTypes.bool
 };
 
 // Same approach for defaultProps too
 StandardDataTable.defaultProps = {
   name: "please set name",
-  title: "please set title",
+  title: "",
   paginated: {
     page: 1,
     recordsPerPage: 10,
@@ -190,6 +195,8 @@ StandardDataTable.defaultProps = {
   filter: false,
   search: false,
   viewColumns: false,
+  showTitle: false,
+  headerbgcolor: '#e0e0e0' //Gray 300
 };
 
 export default StandardDataTable;

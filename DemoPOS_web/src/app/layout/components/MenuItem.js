@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Link from "@material-ui/core/Link";
 import * as layoutRedux from "../_redux/layoutRedux";
-import { Tooltip } from "@material-ui/core";
+import { Tooltip, useTheme } from "@material-ui/core";
 
 function MenuItem(props) {
   const dispatch = useDispatch();
@@ -18,6 +18,7 @@ function MenuItem(props) {
   const [showMenu, setShowMenu] = React.useState(false);
   const preventDefault = (event) => event.preventDefault();
   const location = useLocation();
+  const theme = useTheme();
 
   React.useEffect(() => {
     //set Show menu
@@ -46,10 +47,14 @@ function MenuItem(props) {
             history.push(props.path);
             dispatch(layoutRedux.actions.updateDrawerOpen(false));
           }}
+          style={{
+            padding: "1rem",
+          }}
         >
           <ListItemIcon
             style={{
               minWidth: "2rem",
+              color: theme.palette.secondary.contrastText,
             }}
           >
             <Icon fontSize="small">{props.iconName}</Icon>
@@ -60,12 +65,12 @@ function MenuItem(props) {
               to={`${props.path}`}
               href={`${window.location.origin}${props.path}`}
               onClick={preventDefault}
-              color="inherit"
               style={{
-                fontSize: "0.75rem",
+                fontSize: "1rem",
                 overflow: "hidden",
                 textOverflow: "ellipsis",
                 whiteSpace: "nowrap",
+                color: theme.palette.secondary.contrastText,
               }}
             >
               {props.text}

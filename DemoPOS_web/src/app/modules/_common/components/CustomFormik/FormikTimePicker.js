@@ -9,6 +9,7 @@ function FormikTimePicker(props) {
     <MuiPickersUtilsProvider utils={DayJsUtils} locale="th">
         <KeyboardTimePicker
         fullWidth
+        inputVariant={props.variant}
         name={props.name}
         autoOk={props.autoOk}
         ampm={false}
@@ -43,7 +44,8 @@ FormikTimePicker.propTypes = {
     disableFuture: PropTypes.bool,
     disablePast: PropTypes.bool,
     showSecond: PropTypes.bool,
-    autoOk: PropTypes.bool
+    autoOk: PropTypes.bool,
+    variant: PropTypes.string
   };
   
   // Same approach for defaultProps too
@@ -55,7 +57,8 @@ FormikTimePicker.propTypes = {
     disableFuture: false,
     disablePast: false,
     showSecond: false,
-    autoOk:false
+    autoOk:false,
+    variant: 'outlined'
   };
 
 export default FormikTimePicker;

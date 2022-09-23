@@ -1,21 +1,25 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import Collapse from "@material-ui/core/Collapse";
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
-import Grid from "@material-ui/core/Grid";
-import Icon from "@material-ui/core/Icon";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
-import { Tooltip } from "@material-ui/core";
+import {
+  Collapse,
+  Grid,
+  Icon,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Tooltip,
+  useTheme,
+} from "@material-ui/core";
+import { ExpandLess, ExpandMore } from "@material-ui/icons";
 
 function ParentsMenu(props) {
   const [open, setOpen] = React.useState(false);
   const [showMenu, setShowMenu] = React.useState(false);
   const authReducer = useSelector(({ auth }) => auth);
+  const theme = useTheme();
+
   React.useEffect(() => {
     //set Show menu
     if (props.permissions.length === 0) {
@@ -39,8 +43,19 @@ function ParentsMenu(props) {
     <React.Fragment>
       {showMenu && (
         <React.Fragment>
-          <ListItem button onClick={handleClick}>
-            <ListItemIcon style={{ minWidth: "2rem" }}>
+          <ListItem
+            button
+            onClick={handleClick}
+            style={{
+              padding: "0.75rem",
+            }}
+          >
+            <ListItemIcon
+              style={{
+                minWidth: "2rem",
+                color: theme.palette.secondary.contrastText,
+              }}
+            >
               <Icon fontSize="small">{props.iconName}</Icon>
             </ListItemIcon>
 
@@ -48,22 +63,29 @@ function ParentsMenu(props) {
               <ListItemText
                 primary={props.text}
                 style={{
-                  fontSize: "0.75rem",
+                  fontSize: "1rem",
                   overflow: "hidden",
                   textOverflow: "ellipsis",
                   whiteSpace: "nowrap",
+                  color: theme.palette.secondary.contrastText,
                 }}
                 disableTypography
               />
             </Tooltip>
             {open ? (
-              <ExpandLess fontSize="small" />
+              <ExpandLess
+                fontSize="small"
+                style={{ color: theme.palette.secondary.contrastText }}
+              />
             ) : (
-              <ExpandMore fontSize="small" />
+              <ExpandMore
+                fontSize="small"
+                style={{ color: theme.palette.secondary.contrastText }}
+              />
             )}
           </ListItem>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Grid container style={{ paddingLeft: 20 }}>
+            <Grid container className="MuiListItem-Collapse-Container">
               {props.children}
             </Grid>
           </Collapse>

@@ -1,8 +1,8 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
-import { useSelector, useDispatch } from "react-redux";
 import * as layoutRedux from "./_redux/layoutRedux";
 import ASideMenuList from "./ASideMenuList";
 
@@ -38,7 +38,7 @@ export default function DrawerMenu(props) {
       })}
       role="presentation"
     >
-      <ASideMenuList></ASideMenuList>
+      <ASideMenuList />
     </div>
   );
 
